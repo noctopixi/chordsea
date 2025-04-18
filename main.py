@@ -1,5 +1,19 @@
 import random
 from chords import CHORDS
+import argparse
+
+parser = argparse.ArgumentParser(
+    description="Generate random chord progressions and accompanying tabs"
+)
+
+parser.add_argument(
+    "--no-tab",
+    action="store_true",
+    default=False,
+    help="Do NOT generate an ASCII tab for the chords.",
+)
+
+args = parser.parse_args()
 
 
 def pick_random_chords(num=2):
@@ -24,8 +38,8 @@ def create_tablature(chosen_chords):
 
 chosen_chords = pick_random_chords()
 chord_names = [chord["short_name"] for chord in chosen_chords]
-tablature = create_tablature(chosen_chords)
+print("Chords:", ", ".join(chord_names))
 
-
-print("Chord pair:", ", ".join(chord_names))
-print(*tablature, sep="\n")
+if not args.no_tab:
+    tablature = create_tablature(chosen_chords)
+    print(*tablature, sep="\n")
