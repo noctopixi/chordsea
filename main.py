@@ -46,7 +46,7 @@ def pick_random_chords(count=2):
 
 def create_tablature(chosen_chords):
     STRINGS = ["e", "B", "G", "D", "A", "E"]
-    diagram = []
+    tablature = []
     # Create tablature by going over the 6 strings and adding each chord's fingering
     for string_num, string_name in enumerate(STRINGS):
         separated_fingerings = ""
@@ -55,8 +55,8 @@ def create_tablature(chosen_chords):
             fret = chord["tab_fingering"][string_num]
             separated_fingerings += f"---{fret}"
         # Start each line w/ string name; end with --- to match separators
-        diagram.append(f"{string_name}|{separated_fingerings}---")
-    return diagram
+        tablature.append(f"{string_name}|{separated_fingerings}---")
+    return tablature
 
 
 # Error and exit gracefully if the user requested a chord count higher than the currently known count
