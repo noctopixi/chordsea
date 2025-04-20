@@ -1,6 +1,7 @@
 import random
 from chords import CHORDS
 import argparse
+from exporter import export_tabs
 
 NUM_AVAILABLE_CHORDS = len(CHORDS.keys())
 
@@ -18,6 +19,14 @@ parser.add_argument(
     "--count",
     default=2,
     help=f"Number of chords to generate. Default: 2. Max: {NUM_AVAILABLE_CHORDS}",
+)
+parser.add_argument(
+    "--export",
+    # Export generated tabs to a text file. Filename can be specified.
+    nargs="?",
+    const="tabs.txt",
+    default=None,
+    help=f"Create a text file with the generated chord tabs. Default: tabs.txt",
 )
 args = parser.parse_args()
 
@@ -44,9 +53,9 @@ def pick_random_chords(count=2):
     return random_chords
 
 
-def create_tablature(chosen_chords):
+def create_string_tabs(chosen_chords):
     STRINGS = ["e", "B", "G", "D", "A", "E"]
-    diagram = []
+    tablature = []
     # Create tablature by going over the 6 strings and adding each chord's fingering
     for string_num, string_name in enumerate(STRINGS):
         separated_fingerings = ""
@@ -55,8 +64,8 @@ def create_tablature(chosen_chords):
             fret = chord["tab_fingering"][string_num]
             separated_fingerings += f"---{fret}"
         # Start each line w/ string name; end with --- to match separators
-        diagram.append(f"{string_name}|{separated_fingerings}---")
-    return diagram
+        tablature.append(f"{string_name}|{separated_fingerings}---")
+    return tablature
 
 
 # Error and exit gracefully if the user requested a chord count higher than the currently known count
@@ -66,10 +75,22 @@ except ValueError as e:
     print(f"ERROR: {e}")
     exit(1)
 
+# List that contains all generated tabs
+generated_tablatures = []
+
+# Assemble a full tab for chosen chords
 chord_names = [chord["short_name"] for chord in chosen_chords]
+string_tabs = create_string_tabs(chosen_chords)
+tablature = [", ".join(chord_names)]
+tablature.extend(string_tabs)
 print(", ".join(chord_names))
 
-# Unless --no-tab is used, always print an ASCII tab
+generated_tablatures.append(tablature)
+
+if args.export:
+    export_tabs(generated_tablatures, args.export)
+
+# Unless --no-tab is used, always print the ASCII tabs
 if not args.no_tab:
-    tablature = create_tablature(chosen_chords)
-    print(*tablature, sep="\n")
+    for tablature in generated_tablatures:
+        print(*tablature, sep="\n")
