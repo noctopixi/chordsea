@@ -30,21 +30,6 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
-# Validate the --count argument
-try:
-    # If input cannot be converted to an integer, throws a TypeError
-    COUNT = int(args.count)
-
-    # Check if the desired number of chords is within range
-    if COUNT > NUM_AVAILABLE_CHORDS:
-        raise ValueError(
-            f"There are {NUM_AVAILABLE_CHORDS} chords to choose from. Please specify a number within that limit."
-        )
-except Exception as e:
-    # Catch errors and exit gracefully
-    print(f"ERROR: {e}")
-    exit(1)
-
 
 def pick_random_chords(count=2):
     # Convert chords to a sequence that random.sample can go through
@@ -68,23 +53,35 @@ def create_string_tabs(chosen_chords):
     return tablature
 
 
-# Error and exit gracefully if the user requested a chord count higher than the currently known count
+# Assemble a full tab for chosen chords
+def assemble_chord_tablature(chosen_chords):
+    chord_names = [chord["short_name"] for chord in chosen_chords]
+    string_tabs = create_string_tabs(chosen_chords)
+    tablature = [", ".join(chord_names)]
+    tablature.extend(string_tabs)
+    return tablature
+
+
+# Validate the --count argument
 try:
+    # If input cannot be converted to an integer, throws a TypeError
+    COUNT = int(args.count)
+
+    # Check if the desired number of chords is higher than the available count in chords.py
+    if COUNT > NUM_AVAILABLE_CHORDS or COUNT <= 0:
+        raise ValueError(
+            f"There are {NUM_AVAILABLE_CHORDS} chords to choose from. Please specify a number within that limit."
+        )
     chosen_chords = pick_random_chords(COUNT)
-except ValueError as e:
+
+except Exception as e:
+    # Catch errors and exit gracefully
     print(f"ERROR: {e}")
     exit(1)
 
-# List that contains all generated tabs
 generated_tablatures = []
-
-# Assemble a full tab for chosen chords
-chord_names = [chord["short_name"] for chord in chosen_chords]
-string_tabs = create_string_tabs(chosen_chords)
-tablature = [", ".join(chord_names)]
-tablature.extend(string_tabs)
-print(", ".join(chord_names))
-
+tablature = assemble_chord_tablature(chosen_chords)
+print(str(tablature[0]))  # print chord names
 generated_tablatures.append(tablature)
 
 if args.export:
@@ -93,4 +90,4 @@ if args.export:
 # Unless --no-tab is used, always print the ASCII tabs
 if not args.no_tab:
     for tablature in generated_tablatures:
-        print(*tablature, sep="\n")
+        print(*tablature[1:], sep="\n")
