@@ -90,4 +90,4 @@ if args.export:
 # Unless --no-tab is used, always print the ASCII tabs
 if not args.no_tab:
     for tablature in generated_tablatures:
-        print(*tablature, sep="\n")
+        print(*tablature[1:], sep="\n")
