@@ -53,6 +53,15 @@ def create_string_tabs(chosen_chords):
     return tablature
 
 
+# Assemble a full tab for chosen chords
+def assemble_chord_tablature(chosen_chords):
+    chord_names = [chord["short_name"] for chord in chosen_chords]
+    string_tabs = create_string_tabs(chosen_chords)
+    tablature = [", ".join(chord_names)]
+    tablature.extend(string_tabs)
+    return tablature
+
+
 # Validate the --count argument
 try:
     # If input cannot be converted to an integer, throws a TypeError
@@ -63,24 +72,16 @@ try:
         raise ValueError(
             f"There are {NUM_AVAILABLE_CHORDS} chords to choose from. Please specify a number within that limit."
         )
-    else:
-        chosen_chords = pick_random_chords(COUNT)
+    chosen_chords = pick_random_chords(COUNT)
 
 except Exception as e:
     # Catch errors and exit gracefully
     print(f"ERROR: {e}")
     exit(1)
 
-# List that contains all generated tabs
 generated_tablatures = []
-
-# Assemble a full tab for chosen chords
-chord_names = [chord["short_name"] for chord in chosen_chords]
-string_tabs = create_string_tabs(chosen_chords)
-tablature = [", ".join(chord_names)]
-tablature.extend(string_tabs)
-print(", ".join(chord_names))
-
+tablature = assemble_chord_tablature(chosen_chords)
+print(str(tablature[0]))  # print chord names
 generated_tablatures.append(tablature)
 
 if args.export:
