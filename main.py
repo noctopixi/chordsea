@@ -5,31 +5,6 @@ from exporter import export_tabs
 
 NUM_AVAILABLE_CHORDS = len(CHORDS.keys())
 
-# Set and load user arguments. By default, the script generates 2 random chords with ASCII tabs.
-parser = argparse.ArgumentParser(
-    description="Generate random chord progressions and accompanying tabs"
-)
-parser.add_argument(
-    "--no-tab",
-    action="store_true",
-    default=False,
-    help="Do NOT generate an ASCII tab for the chords.",
-)
-parser.add_argument(
-    "--count",
-    default=2,
-    help=f"Number of chords to generate. Default: 2. Max: {NUM_AVAILABLE_CHORDS}",
-)
-parser.add_argument(
-    "--export",
-    # Export generated tabs to a text file. Filename can be specified.
-    nargs="?",
-    const="tabs.txt",
-    default=None,
-    help=f"Create a text file with the generated chord tabs. Default: tabs.txt",
-)
-args = parser.parse_args()
-
 
 def pick_random_chords(count=2):
     # Convert chords to a sequence that random.sample can go through
@@ -60,6 +35,32 @@ def assemble_chord_tablature(chosen_chords):
     tablature = [", ".join(chord_names)]
     tablature.extend(string_tabs)
     return tablature
+
+
+# Set and load user arguments. By default, the script generates 2 random chords with ASCII tabs.
+parser = argparse.ArgumentParser(
+    description="Generate random chord progressions and accompanying tabs"
+)
+parser.add_argument(
+    "--no-tab",
+    action="store_true",
+    default=False,
+    help="Do NOT generate an ASCII tab for the chords.",
+)
+parser.add_argument(
+    "--count",
+    default=2,
+    help=f"Number of chords to generate. Default: 2. Max: {NUM_AVAILABLE_CHORDS}",
+)
+parser.add_argument(
+    "--export",
+    # Export generated tabs to a text file. Filename can be specified.
+    nargs="?",
+    const="tabs.txt",
+    default=None,
+    help=f"Create a text file with the generated chord tabs. Default: tabs.txt",
+)
+args = parser.parse_args()
 
 
 # Validate the --count argument
