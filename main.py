@@ -50,7 +50,7 @@ parser.add_argument(
 parser.add_argument(
     "--count",
     default=2,
-    help=f"Number of chords to generate. Default: 2. Max: {NUM_AVAILABLE_CHORDS}",
+    help=f"Number of chords to generate per set. Default: 2. Max: {NUM_AVAILABLE_CHORDS}",
 )
 parser.add_argument(
     "--export",
@@ -60,20 +60,30 @@ parser.add_argument(
     default=None,
     help=f"Create a text file with the generated chord tabs. Default: tabs.txt",
 )
+parser.add_argument(
+    "--sets",
+    default=3,
+    help=f"Number of chord sets to generate. Default: 3 (a typical practice lasts 15m, 5m per set)",
+)
 args = parser.parse_args()
 
 
-# Validate the --count argument
+# Validate arguments: --count, --sets
 try:
     # If input cannot be converted to an integer, throws a TypeError
     COUNT = int(args.count)
+    sets = int(args.sets)
 
     # Check if the desired number of chords is higher than the available count in chords.py
     if COUNT > NUM_AVAILABLE_CHORDS or COUNT <= 0:
         raise ValueError(
             f"There are {NUM_AVAILABLE_CHORDS} chords to choose from. Please specify a number within that limit."
         )
-    chosen_chords = pick_random_chords(COUNT)
+
+    if sets <= 0:
+        raise ValueError(
+            f"At least 1 set of chords must be generated. Please specify a number equal or higher than 1."
+        )
 
 except Exception as e:
     # Catch errors and exit gracefully
@@ -81,14 +91,17 @@ except Exception as e:
     exit(1)
 
 generated_tablatures = []
-tablature = assemble_chord_tablature(chosen_chords)
-print(str(tablature[0]))  # print chord names
-generated_tablatures.append(tablature)
+
+for i, s in enumerate(range(sets)):
+    chosen_chords = pick_random_chords(COUNT)
+    tablature = assemble_chord_tablature(chosen_chords)
+    print(f"Set {i+1}")
+    print(str(tablature[0]))  # print chord names
+    generated_tablatures.append(tablature)
+    # Unless --no-tab is used, always print each set's ASCII tab and a separator
+    if not args.no_tab:
+        print(*tablature[1:], sep="\n")
+        print("")
 
 if args.export:
     export_tabs(generated_tablatures, args.export)
-
-# Unless --no-tab is used, always print the ASCII tabs
-if not args.no_tab:
-    for tablature in generated_tablatures:
-        print(*tablature[1:], sep="\n")
