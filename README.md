@@ -1,4 +1,4 @@
-# Chordmuse 🎶
+# Chordsea 🫧🎶
 
 ## Overview
 
