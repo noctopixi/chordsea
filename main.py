@@ -71,11 +71,11 @@ args = parser.parse_args()
 # Validate arguments: --count, --sets
 try:
     # If input cannot be converted to an integer, throws a TypeError
-    COUNT = int(args.count)
+    count = int(args.count)
     sets = int(args.sets)
 
     # Check if the desired number of chords is higher than the available count in chords.py
-    if COUNT > NUM_AVAILABLE_CHORDS or COUNT <= 0:
+    if count > NUM_AVAILABLE_CHORDS or count <= 0:
         raise ValueError(
             f"There are {NUM_AVAILABLE_CHORDS} chords to choose from. Please specify a number within that limit."
         )
@@ -93,7 +93,7 @@ except Exception as e:
 generated_tablatures = []
 
 for i, s in enumerate(range(sets)):
-    chosen_chords = pick_random_chords(COUNT)
+    chosen_chords = pick_random_chords(count)
     tablature = assemble_chord_tablature(chosen_chords)
     print(f"Set {i+1}")
     print(str(tablature[0]))  # print chord names
