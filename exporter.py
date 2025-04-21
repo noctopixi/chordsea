@@ -10,6 +10,7 @@ def export_tabs(tabs, output_file="tabs.txt"):
         # Each tab is a list of 7 strings: the chord names, and fingerings for the 6 guitar strings
         # Join all strings items in a tab with a newline
         output_str += f"\nSet {i+1}\n" + "\n".join(t)
+        output_str += "\n"  # Separator for multiple sets
 
     Path(output_file).write_text(output_str, encoding="utf-8")
     return output_str
