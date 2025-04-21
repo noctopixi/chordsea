@@ -17,27 +17,27 @@ It's perfect for practicing guitar chord changes or simply generating chord prog
 1. **Clone the repository**:
 
     ```bash
-    git clone https://github.com/noctopixi/chord-selector.git
+    git clone https://github.com/noctopixi/chordsea.git
     ```
 
 2. **Navigate to the project directory**:
 
     ```bash
-    cd chord-selector
+    cd chordsea
     ```
 
 ## Usage
 
 1. **Run the script**:
 
-    ```bash
-    python main.py
+    ```sh
+    python3 main.py
     ```
 
 2. **Customize chord generation with command line arguments**:
    The following arguments are available:
 
-    ```bash
+    ```sh
     --no-tab           Do NOT generate an ASCII tab for the chords.
     --count COUNT      Number of chords to generate per set. Default: 2. Max: 16
     --export [EXPORT]  Create a text file with the generated chord tabs. Default: tabs.txt
@@ -46,8 +46,8 @@ It's perfect for practicing guitar chord changes or simply generating chord prog
 
 ## Example Output
 
-```bash
-$ python main.py
+```sh
+$ python3 main.py
 Chord pair: Am, Cadd9
 e|---0---0---
 B|---1---3---
