@@ -2,14 +2,15 @@
 
 ## Overview
 
-This Python script selects random guitar chords and generates tabs.
+This Python script selects random guitar chords and creates practice sets with ASCII tabs.
 
-It's perfect for practicing guitar or simply generating chord progressions to explore new sounds.
+It's perfect for practicing guitar chord changes or simply generating chord progressions to explore new sounds.
 
 ## Features
 
-- Selects a specified number of random guitar chords (default is 2).
-- Generates a simple ASCII tablature for the selected chords in standard E tuning (EADGBE).
+- Creates sets of chords to practice guitar chord changes (by default, 3 sets of 2 chords each).
+- Generates ASCII tablatures for each chord set in standard E tuning (EADGBe).
+- Allows exporting chords to a text file (by default, tabs.txt)
 
 ## Installation
 
@@ -33,13 +34,19 @@ It's perfect for practicing guitar or simply generating chord progressions to ex
     python main.py
     ```
 
-2. **Customize the number of chords**:
-   You can change the default number of chords by modifying the `num` parameter in the `pick_random_chords` function.
-   NOTE: support for command line arguments coming soon!
+2. **Customize chord generation with command line arguments**:
+   The following arguments are available:
+
+    ```bash
+    --no-tab           Do NOT generate an ASCII tab for the chords.
+    --count COUNT      Number of chords to generate per set. Default: 2. Max: 16
+    --export [EXPORT]  Create a text file with the generated chord tabs. Default: tabs.txt
+    --sets SETS        Number of chord sets to generate. Default: 3 (a typical practice lasts 15m, 5m per set)
+    ```
 
 ## Example Output
 
-```
+```bash
 $ python main.py
 Chord pair: Am, Cadd9
 e|---0---0---
