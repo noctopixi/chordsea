@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pico.css') }}">
+    <title>About Chordsea</title>
+</head>
+<body>
+    <header>
+      <nav>
+        <ul>
+          <li><strong><a href="/">Chordsea</a></strong><li>
+        </ul>
+        <ul>
+          <li><a href="/">home</a><li>
+          <li><a href="/about">about</a><li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <h1>About Chordsea</h1>
+      <hr/>
+      <h2>what is it?</h2>
+      <p>Chordsea is a minimalist chord progression generator. It is written using Python and Flask.</p>
+      <p>This is the web version. For a minimalist experience, you can also run chordsea and get ASCII tabs right in your terminal.</p>
+
+      <h2>why is it?</h2>
+      <p>When practicing guitar chord changes, I felt like I often went for the "safe", obvious pairs that I was comfortable with, and realized that I'd need a randomized practice that challenged and pushed me out of my comfort zone.</p>
+      <p>I had recently learned about the <strong>random</strong> Python module and decided to implement a guitar chord randomizer that I could run in my terminal.</p>
+      <p>I decided to create the web version to learn Flask and to make chordsea accessible to anyone who wants an easy solution to generate practice sessions for chord changes.</p>
+    </main>
+</body>
+</html>
