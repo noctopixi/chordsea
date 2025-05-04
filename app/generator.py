@@ -36,13 +36,22 @@ def assemble_chord_tablature(chosen_chords):
 
 def generate_chords(count=2, sets=3, export=None, no_tab=False):
     generated_tablatures = []
+    plaintext = "" # Create a plaintext version for the webapp
 
     for i in range(sets):
         chosen_chords = pick_random_chords(count)
         tablature = assemble_chord_tablature(chosen_chords)
-        print(f"Set {i+1}")
-        print(str(tablature[0]))  # print chord names
         generated_tablatures.append(tablature)
+
+        set_number = f"Set {i+1}"
+        chord_names = str(tablature[0])
+        plaintext += f"{set_number}\n{chord_names}\n"
+        # Add each string tablature to plaintext
+        for line in tablature[1:]:
+            plaintext += f"{line}\n"
+        plaintext += f"\n" 
+        print(set_number)
+        print(chord_names)
         # Unless --no-tab is used, always print each set's ASCII tab and a separator
         if not no_tab:
             print(*tablature[1:], sep="\n")
@@ -50,3 +59,5 @@ def generate_chords(count=2, sets=3, export=None, no_tab=False):
 
     if export:
         export_tabs(generated_tablatures, export)
+
+    return plaintext
