@@ -1,24 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="color-scheme" content="light dark">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/pico.css') }}">
-    <title>About Chordsea</title>
-</head>
-<body>
-    <header>
-      <nav>
-        <ul>
-          <li><strong><a href="/">Chordsea</a></strong><li>
-        </ul>
-        <ul>
-          <li><a href="/">home</a><li>
-          <li><a href="/about">about</a><li>
-        </ul>
-      </nav>
-    </header>
+{% extends "base.html" %}
+
+{% block title %}About{% endblock %}
+    {% block content %}
     <main>
       <h1>About Chordsea</h1>
       <hr/>
@@ -31,5 +14,4 @@
       <p>I had recently learned about the <strong>random</strong> Python module and decided to implement a guitar chord randomizer that I could run in my terminal.</p>
       <p>I decided to create the web version to learn Flask and to make chordsea accessible to anyone who wants an easy solution to generate practice sessions for chord changes.</p>
     </main>
-</body>
-</html>
+    {% endblock %}

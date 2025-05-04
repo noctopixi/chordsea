@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pico.css') }}">
+    {% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body>
+    {% block navbar %}
+    <header>
+      <nav>
+        <ul>
+          <li><strong><a href="/">Chordsea</a></strong><li>
+        </ul>
+        <ul>
+          <li><a href="/">home</a><li>
+          <li><a href="/about">about</a><li>
+        </ul>
+      </nav>
+    </header>
+    {% endblock %}
+    <body>
+        {% block content %}
+        {% endblock %}
+      <footer>made with love and tears by @noctopixi</footer>
+    </body>
+  </body>
+</html>
